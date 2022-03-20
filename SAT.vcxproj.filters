@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Shape">
+      <UniqueIdentifier>{2813b6ad-2332-4370-8e26-1619676f84dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Tool">
+      <UniqueIdentifier>{026c43ae-8287-49eb-8385-e4bbeed6b5d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Collider">
+      <UniqueIdentifier>{f54f0a53-0fb3-4c0f-8b17-787c434e4f34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Sprite">
+      <UniqueIdentifier>{9e696217-bd67-4b31-b77b-9e0cfa623894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Game">
+      <UniqueIdentifier>{24e612ca-7218-4d0e-8af1-c767ecb93976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Animation">
+      <UniqueIdentifier>{55e699fe-b277-47f0-94b7-5d45b3ac2ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\OverSDL">
+      <UniqueIdentifier>{3c61e8f4-7fb7-4f83-88c5-8330c213e968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Main">
+      <UniqueIdentifier>{32bc6b85-5d0f-4ef8-a181-5f25957b2276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Main\Player">
+      <UniqueIdentifier>{6a362531-ef14-47de-a884-48a9b1ca67be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Main\Block">
+      <UniqueIdentifier>{1c5c59ba-093f-4284-a754-ab2c2a1d545a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Main\Partical">
+      <UniqueIdentifier>{a27f8c9d-9e9a-4d52-8408-6c367da1ff87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Main\Scene">
+      <UniqueIdentifier>{309d7b73-7f35-4215-94c8-2b70249ed7fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Main\other">
+      <UniqueIdentifier>{e9362b40-c107-40d4-bb29-3fc97d11b5f7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>源文件\Main\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec2.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Spike.cpp">
+      <Filter>源文件\Main\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodEffect.cpp">
+      <Filter>源文件\Main\Partical</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Saver.cpp">
+      <Filter>源文件\Main\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>源文件\Main\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Line.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>头文件\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>头文件\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>头文件\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>头文件\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>头文件\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="OverSDL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>头文件\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>源文件\Main\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Spike.h">
+      <Filter>源文件\Main\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>头文件\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodEffect.h">
+      <Filter>源文件\Main\Partical</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene_1.h">
+      <Filter>源文件\Main\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene_2.h">
+      <Filter>源文件\Main\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>头文件\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverSprite.h">
+      <Filter>源文件\Main\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Saver.h">
+      <Filter>源文件\Main\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>源文件\Main\Player</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
