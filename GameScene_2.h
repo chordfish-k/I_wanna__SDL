@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Spike.h"
 #include "Game.h"
+#include "IWannaPalette.h"
 
 using namespace std;
 
@@ -28,7 +29,13 @@ private:
 
 	Player* player = NULL;
 
+	IWannaPalette* iwp;
+
 	bool trap1 = false;
+
+	double gameDt = 0;
+
+	Vec2 playerGridPos;
 
 public:
 	GameScene_2() {
@@ -36,8 +43,11 @@ public:
 		gridW = 15;
 
 		grid = new Grid(gridH, gridW, 32, 32, 1);
-		sp1 = new Sprite(Vec2(0, 0), "res/block/floor_1.png");
-		sp2 = new Sprite(Vec2(0, 0), "res/block/floor_2.png");
+
+		iwp = new IWannaPalette();
+		grid->setPalette(iwp);
+		/*sp1 = new Sprite(Vec2(0, 0), "res/block/floor_1.bmp");
+		sp2 = new Sprite(Vec2(0, 0), "res/block/floor_2.bmp");
 
 		spkup = new Spike(0);
 		spkright = new Spike(1);
@@ -60,7 +70,7 @@ public:
 		grid->addNewTile("spike", spkup);
 		grid->addNewTile("spike", spkright);
 		grid->addNewTile("spike", spkdown);
-		grid->addNewTile("spike", spkleft);
+		grid->addNewTile("spike", spkleft);*/
 
 		saver = new Saver("scene2", { 120, 45 });
 		saver->setPosition({ 80, 50 });
@@ -84,10 +94,9 @@ public:
 
 		addChild("grid", grid);
 
-		//player = new Player();
-		//player->drawCollider = true;
-		//player->setScale(0.7);
-		//addChild("player", player);
+
+		initTileTraps();
+
 		
 	}
 
@@ -105,9 +114,12 @@ public:
 	void onLoad(Vec2 playerPosition) {
 
 		trap1 = false;
+		resetTileTraps();
 
 		player = Game::game->getPlayer();
 		addChild("player", player);
+		player->setPosition(playerPosition);
+
 		player->setPosition(playerPosition);
 
 		player->reset();
@@ -118,25 +130,37 @@ public:
 
 	}
 
+	void resetTileTraps() {
+		//Trap1
+		grid->getTileAt(7, 7)->setData("trigerred", 0);
+
+	}
+
+
+	void initTileTraps() {
+
+		grid->getTileAt(7, 7)
+			->setUpdateFuncion([&](Sprite* self) {
+			if (!self->getData("trigerred")) {
+				if(playerGridPos.x == 7 && fabs(playerGridPos.y - 7) == 1)
+					self->setData("trigerred", 1);
+			}
+			else {
+				grid->tileMoveTo({ 7, 7 }, { 4, 7 }, 800 * gameDt);
+			}
+		});
+	}
+
 	void onUpdate(double dt) {
 		Scene::onUpdate(dt);
 
-		Vec2 playerGridPos = grid->pointInGridXY(player->getPosition());
+		gameDt = dt;
+
+		playerGridPos = grid->pointInGridXY(player->getPosition());
 
 		if (playerGridPos.y == gridH) {
 			Game::game->enterScene("scene1", Vec2(player->getPosition().x, player->getPosition().y - (grid->getTileH() ) * 1 * gridH));
 		}
 
-
-		Vec2 trapPos(7, 7);
-
-		if (!trap1 && playerGridPos.x == trapPos.x && fabs(playerGridPos.y - trapPos.y) == 1) {
-			trap1 = true;
-			
-		}
-
-		if (trap1) {
-			grid->tileMoveTo(trapPos, {trapPos.x -3, trapPos.y}, 800*dt);
-		}
 	}
 };

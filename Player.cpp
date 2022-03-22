@@ -9,35 +9,35 @@
 
 Player::Player() {
 
-	this->open("res/player/player_idle_0.png");
+	this->open("res/player/player_idle_0.bmp");
 
 	animation_idle = new Animation(5); //5tick / frame
-	animation_idle->add("res/player/player_idle_0.png")
-		->add("res/player/player_idle_1.png")
-		->add("res/player/player_idle_2.png")
-		->add("res/player/player_idle_3.png")
+	animation_idle->add("res/player/player_idle_0.bmp")
+		->add("res/player/player_idle_1.bmp")
+		->add("res/player/player_idle_2.bmp")
+		->add("res/player/player_idle_3.bmp")
 		->setLoop(true);
 
 	animation_run = new Animation(5);
-	animation_run->add("res/player/player_run_0.png")
-		->add("res/player/player_run_1.png")
-		->add("res/player/player_run_2.png")
-		->add("res/player/player_run_3.png")
+	animation_run->add("res/player/player_run_0.bmp")
+		->add("res/player/player_run_1.bmp")
+		->add("res/player/player_run_2.bmp")
+		->add("res/player/player_run_3.bmp")
 		->setLoop(true);
 
 	animation_jump = new Animation(5); 
-	animation_jump->add("res/player/player_jump_0.png")
-		->add("res/player/player_jump_1.png")
+	animation_jump->add("res/player/player_jump_0.bmp")
+		->add("res/player/player_jump_1.bmp")
 		->setLoop(true);
 
 	animation_fall = new Animation(5);
-	animation_fall->add("res/player/player_fall_0.png")
-		->add("res/player/player_fall_1.png")
+	animation_fall->add("res/player/player_fall_0.bmp")
+		->add("res/player/player_fall_1.bmp")
 		->setLoop(true);
 
 	anchor = Vec2(0.5, 0.5);
 
-	Polygon2D rect = Rectangle2D(Vec2(0, 7), Vec2(-5, -7), Vec2(5, 8));
+	Polygon2D rect = Rectangle2D(Vec2(0, 7), Vec2(-5, -10), Vec2(5, 8));
 	this->setPolygonCollider(rect);
 	this->setScale(1.5);
 
@@ -65,15 +65,16 @@ void Player::reset() {
 void Player::checkMove(double dt) {
 	if (Game::game->keys['A']) {
 		XTargetVel.x = -speed;
-		velocity.x = -speed;
+		this->velocity.x = -speed;
+		this->velocity.x = -speed;
 	}
 	else if (Game::game->keys['D']) {
 		XTargetVel.x = speed;
-		velocity.x = speed;
+		this->velocity.x = speed;
 	}
 	else {
 		XTargetVel.x = 0;
-		velocity.x = 0;
+		this->velocity.x = 0;
 	}
 
 	//如果碰墙就不给速度了
@@ -91,13 +92,13 @@ void Player::checkMove(double dt) {
 				jumping = true;
 			}
 
-			velocity.y = -jumpSpeed;
+			this->velocity.y = -jumpSpeed;
 			YTargetVel.y = 0;
 		}
 	}
 	if (state == State::JUMP && !Game::game->keys[VK_SPACE]) {
 		//cout << "A" << endl;
-		velocity.y = velocity.y * 0.8;
+		this->velocity.y = this->velocity.y * 0.8;
 		YTargetVel.y = jumpSpeed * 0.8;
 	}
 
@@ -110,22 +111,22 @@ void Player::checkMove(double dt) {
 	bool jp = (fabs(YTargetVel.y) > eps);
 
 	if (move || jp) {
-		velocity = velocity.moveToword(kvel, (move ? acceleration : friction) * dt, (jp ? YFirction : gravity) * dt);
+		this->velocity = this->velocity.moveToword(kvel, (move ? acceleration : friction) * dt, (jp ? YFirction : gravity) * dt);
 	}
 	else {
-		velocity = velocity.moveToword(Vec2(0, 0), friction * dt, gravity * dt);
+		this->velocity = this->velocity.moveToword(Vec2(0, 0), friction * dt, gravity * dt);
 	}
 
 
 
 	//应用运动
-	re = moveAndCollide(velocity * dt).normalize();
+	re = moveAndCollide(this->velocity * dt).normalize();
 	Vec2 vp = getPosition();
 
 	if (fabs(re.x) > eps || fabs(re.y) > eps) {
 
 		if (fabs(re.y) > eps) {
-			velocity.y = 0;
+			this->velocity.y = 0;
 		}
 
 	}
@@ -163,6 +164,7 @@ void Player::onUpdate(double dt) {
 	
 	checkMove(dt);
 	checkShoot(dt);
+	checkOutside();
 	
 }
 
@@ -210,30 +212,36 @@ void Player::changeAnime() {
 	//---更改状态 end---
 }
 
-void Player::onCollided(Node* other) {
-	
-	if (other->name != "floor") {
-		//cout << other->name << endl;
+void Player::checkOutside() {
+	if (position.y > Draw::H + 80 || position.y < -80 || position.x > Draw::W + 80 || position.x < -80) {
+		die();
+		
 	}
+}
+
+void Player::onCollided(Node* other, Vec2 dir) {
+	
 	if (other->name.substr(0, 5) == "spike") {
-		setState(State::DEATH);
-
-		Node* eff = new BloodEffect(this->position);
-		addChild("Blood", eff);
-		visable = false;
-
-		Node* over = new GameOverSprite();
-		addChild("GameOver", over);
+		die();
 	}
 
 	else if (other->getName() == "saver") {
-		//Game::game->setPlayerRespawnPoint("scene1", {50, 300});
 		Saver* s = (Saver*)other;
 		s->saverPoint();
 
 	}
 		
-	
+}
+
+void Player::die() {
+	setState(State::DEATH);
+
+	Node* eff = new BloodEffect(this->position);
+	addChild("Blood", eff);
+	visable = false;
+
+	Node* over = new GameOverSprite();
+	addChild("GameOver", over);
 }
 
 void Player::setState(State newState) {

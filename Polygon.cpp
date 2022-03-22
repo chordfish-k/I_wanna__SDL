@@ -70,6 +70,8 @@ bool Polygon2D::checkCollision(Collider* other, Vec2& dir) {
 	int cnt = 0, id = 0;
 	double mivr = 9999;
 
+	//bool flag = true;
+
 	for (auto aixs : axe1) {
 
 		Collider::Projection l1 = projectOn(aixs);

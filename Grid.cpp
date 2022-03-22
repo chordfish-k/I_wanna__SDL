@@ -10,7 +10,7 @@ Grid::Grid(int H, int W, int tileH, int tileW, double scale)
 	tileTypeNums = 0;
 	resetSize(H, W);
 	//0空气
-	spriteMap[0] = new Sprite();
+	//spriteMap[0] = new Sprite();
 	anchor = Vec2(0.5, 0.5);
 }
 
@@ -38,7 +38,9 @@ void Grid::setTileSprite(int i, int j, int id) {
 		spriteGrid[i * W + j] = NULL;
 	}
 
-	spriteGrid[i * W + j] = spriteMap[id]->clone();
+	spriteGrid[i * W + j] = palette->getCopyById(id);//spriteMap[id]->clone();
+	spriteGrid[i * W + j]->parent = this;
+	spriteGrid[i * W + j]->setUpdateFuncion(palette->getOriginById(id)->getUpdateFuncion());
 	//memcpy(spriteGrid[i * W + j], spriteMap[id], sizeof(Sprite));
 	//spriteGrid[i * W + j]->rootScene = rootScene;
 	//if(grid[i*W+j])
@@ -57,10 +59,11 @@ void Grid::setTileSprite(int i, int j, int id) {
 }
 
 void Grid::resetPositions() {
+	cout << W << endl;
 	for (int i = 0; i < H; i++) {
 		for (int j = 0; j < W; j++) {
 
-			if (spriteGrid[i * W + j] == NULL) return;
+			if (spriteGrid[i * W + j] == NULL) continue;
 
 			//setTileOn(i, j, grid[i * W + j]);
 
@@ -81,7 +84,7 @@ void Grid::resetPositions() {
 }
 
 void Grid::setTileOn(int i, int j, int id) {
-	if (i < 0 || j < 0 || i >= H || j >= W || id > tileTypeNums || id < 0) return;
+	if (i < 0 || j < 0 || i >= H || j >= W || id > palette->getSize() || id < 0) return;
 
 	grid[i * W + j] = id;
 
@@ -110,9 +113,9 @@ void Grid::setTiles(vector<string> names, int h, int w) {
 	}
 }
 
-Sprite* Grid::getTileAt(int i, int j) {
-	if(i >= 0 && j >= 0 && i < H && j < W)
-		return spriteGrid[i * W + j];
+Sprite* Grid::getTileAt(int x, int y) {
+	if(x >= 0 && y >= 0 && x < W && y < H)
+		return spriteGrid[y * W + x];
 	return NULL;
 }
 
@@ -120,14 +123,14 @@ Sprite* Grid::getTileAt(int i, int j) {
 /*
  返回瓦片id
 */
-int Grid::addNewTile(string name, Sprite* sprite) {
-	tileTypeNums++;
-	spriteMap[tileTypeNums] = sprite;
-	//cout << name << endl;
-	sprite->setName(name);
-	sprite->parent = this;
-	return tileTypeNums;
-}
+//int Grid::addNewTile(string name, Sprite* sprite) {
+//	tileTypeNums++;
+//	spriteMap[tileTypeNums] = sprite;
+//	//cout << name << endl;
+//	sprite->setName(name);
+//	sprite->parent = this;
+//	return tileTypeNums;
+//}
 
 void Grid::draw() {
 	for (int i = 0; i < H; i++) {
@@ -150,7 +153,7 @@ Vec2 Grid::pointInGridXY(Vec2 point) {
 	该函数并不会改变tile在网格中的实际位置
 */
 bool Grid::tileMoveTo(Vec2 posOfTile, Vec2 endPosition, double speed) {
-	Node* sp = getTileAt(posOfTile.y, posOfTile.x);
+	Node* sp = getTileAt(posOfTile.x, posOfTile.y);
 	if (sp == NULL) {
 		//cout << "?" << endl;
 		return false;
@@ -165,7 +168,7 @@ bool Grid::tileMoveTo(Vec2 posOfTile, Vec2 endPosition, double speed) {
 	该函数并不会改变tile在网格中的实际位置
 */
 Vec2 Grid::tileMoveToAndCollide(Vec2 posOfTile, Vec2 endPosition, double speed, bool slide) {
-	Node* sp = getTileAt(posOfTile.y, posOfTile.x);
+	Node* sp = getTileAt(posOfTile.x, posOfTile.y);
 	if (sp == NULL) return Vec2(0, 0);
 	Vec2 realEndPos = Vec2(endPosition.x * tileW *scale + anchor.x * tileW , endPosition.y * tileH * scale - anchor.y * tileH * scale);
 	return sp->moveToAndCollide(realEndPos, speed, slide);

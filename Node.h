@@ -33,6 +33,7 @@ public:
 public:
 	Node(Vec2 position = Vec2(0, 0)) 
 		:position(position), scale(Vec2(1, 1)), children() {};
+	virtual ~Node() {};
 	virtual void setPosition(Vec2 p) { position = p; }; //设置中心点位置
 	virtual Vec2 getPosition() { return position; };
 	virtual void setScale(Vec2 s) { scale = s; }; //设置拉伸
@@ -51,7 +52,7 @@ public:
 	virtual Vec2 moveAndCollide(Vec2 velocity, bool gothrough = false, bool slide = false);
 	virtual bool moveTo(Vec2 endPosition, double speed);
 	virtual Vec2 moveToAndCollide(Vec2 endPosition, double speed, bool slide = false);
-	virtual void onCollided(Node* other) {};
+	virtual void onCollided(Node* other, Vec2 dir) {};
 	virtual Node* clone();
 };
 

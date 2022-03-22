@@ -117,15 +117,15 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>源文件\Main\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Palette.cpp">
+      <Filter>源文件\OverSDL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Line.h">
       <Filter>头文件\Shape</Filter>
     </ClInclude>
     <ClInclude Include="Polygon.h">
-      <Filter>头文件\Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec2.h">
       <Filter>头文件\Shape</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
@@ -167,9 +167,6 @@
     <ClInclude Include="Collider.h">
       <Filter>头文件\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Draw.h">
-      <Filter>头文件\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>头文件\Shape</Filter>
     </ClInclude>
@@ -208,6 +205,18 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>源文件\Main\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>头文件\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>头文件\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Palette.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="IWannaPalette.h">
+      <Filter>源文件\Main\other</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

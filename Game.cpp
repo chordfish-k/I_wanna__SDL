@@ -36,7 +36,7 @@ void Game::addScene(string name, Scene* s) {
 
 void Game::enterScene(string name, Vec2 playerPosition ) {
 	nextScene = game->scenes[name];
-	cout << name << " : " << (nextScene == NULL) << endl;
+	//cout << name << " : " << (nextScene == NULL) << endl;
 	waitToChangeScene = true;
 	nextPlayerPosition = playerPosition;
 }
@@ -84,16 +84,16 @@ void Game::start() {
 
 		//检测reset
 		if (game->keysJust['R']) {
-			
-			game->returnPlayerRespawnPoint();
 			game->currentScene->reset();
+			game->returnPlayerRespawnPoint();
+			
 		}
 		
 
 		if (game->currentScene)
 			game->currentScene->onUpdate(SCREEN_TICKS_PER_FRAME / 1500.0);
 
-
+		//cout << game->capTimer.getTicks() << " "<< game->frameTicks << endl;
 		//如果帧提前完成
 		game->frameTicks = game->capTimer.getTicks();
 		//showFPS(avgFPS);

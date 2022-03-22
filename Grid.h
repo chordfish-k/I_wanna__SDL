@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include <vector>
 #include "SDL.h"
+#include "Palette.h"
 
 using namespace std;
 
@@ -14,7 +15,8 @@ class Grid : public Node {
 private:
 	vector<int> grid;
 	vector<Sprite*> spriteGrid;
-	map<int, Sprite*> spriteMap;
+	Palette *palette;
+	//map<int, Sprite*> spriteMap;
 	int tileTypeNums;
 	int H;
 	int W;
@@ -23,12 +25,12 @@ private:
 	double scale;
 public:
 	Grid(int H, int W, int tileH, int tileW, double scale = 1);
-	int addNewTile(string name, Sprite * sprite);
+	void setPalette(Palette* p) { palette = p; }
 	void setTileSprite(int i, int j, int id);
 	void setTileOn(int i, int j, int id);
 	void setTiles(vector<int> ids, int h, int w);
 	void setTiles(vector<string> ids, int h, int w);
-	Sprite* getTileAt(int i, int j);
+	Sprite* getTileAt(int x, int y);
 	vector<Node*> getAllChildren();
 	string getNodeType() { return "Grid"; }
 	int getH() { return H; }

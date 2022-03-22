@@ -16,9 +16,9 @@ private:
 	Animation* ani = NULL;
 public:
 	Saver(string sceneName, Vec2 pos);
-	//Saver(Saver &s);
 	void saverPoint();
-	//Sprite* clone();
+	void onUpdate(double dt);
+	Saver* clone() { return new Saver(*this); };
 };
 
 #endif

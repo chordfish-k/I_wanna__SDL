@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include "OverSDL.h"
 
 #include "GameScene_1.h"
@@ -32,8 +33,8 @@ int main(int args, char* argv[]) {
 	game.init("I Wanna do some Tests", WIDTH, HEIGHT);
 
 	player = new Player();
-	//player->drawCollider = true;
-	player->setScale(0.7);
+	player->drawCollider = true;
+	player->setScale(0.65);
 	player->visable = true;
 	
 
@@ -48,11 +49,13 @@ int main(int args, char* argv[]) {
 
 	game.setPlayer(player);
 
-	//Vec2 playerPos = { 280, 300 };
-	Vec2 playerPos = { 80, (double)(Draw::H - 60) };
+	Vec2 playerPos = { 50, 300 };
+	//Vec2 playerPos = { 120, (double)(Draw::H - 200) };
 	game.setPlayerRespawnPoint("scene1", playerPos);
+	//game.setPlayerRespawnPoint("scene2", playerPos);
 
 	game.enterScene("scene1", playerPos);
+	//game.enterScene("scene2", playerPos);
 	game.start();
 
 

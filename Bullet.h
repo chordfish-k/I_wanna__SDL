@@ -12,7 +12,7 @@ private:
 public:
 	Bullet(bool left);
 	void onUpdate(double dt);
-	void onCollided(Node* other);
+	void onCollided(Node* other, Vec2 dir);
 };
 
 #endif

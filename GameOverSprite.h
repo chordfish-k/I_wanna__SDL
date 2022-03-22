@@ -6,7 +6,7 @@ class GameOverSprite : public Sprite {
 
 public:
 	GameOverSprite() {
-		open("res/other/gameover.png");
+		open("res/other/gameover.bmp");
 		setScale(0.5);
 		setPosition(Vec2(Draw::W / 2, Draw::H / 2));
 	}

@@ -6,8 +6,12 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <functional>
+
 #include <SDL.h>
 #include <SDL_image.h>
+
+
 #include "Vec2.h"
 #include "Node.h"
 #include "Draw.h"
@@ -31,25 +35,23 @@ protected:
 	Animation* curAnimation = NULL;
 	Polygon2D collider;
 	
+	function<void(Sprite*)> updateFunc;
+	function<void(Sprite*, Vec2)> collidedFunc;
+	map<string, int> datas;
+
 public:
 	bool enableCollider = false;
 	bool drawCollider = false;
 	bool flipX = false;
 	bool flipY = false;
 	bool visable = true;
-	
+	bool simulateGravity = false;
+
+	Vec2 velocity = Vec2(0, 0);
+	double gravity = 2000;
 
 public:
-	Sprite(Vec2 position = Vec2(0,0), string src = "", double scale = 1)
-		: Node(position),  box({0,0,0,0})// box(Polygon())
-	{ 
-		collider = Polygon2D({Vec2(0,0),Vec2(0,0) ,Vec2(0,0) ,Vec2(0,0) }, position);
-		anchor = Vec2(0.5, 0.5);
-		if (src != "") {
-			open(src);
-		}
-		setScale(scale);
-	};
+	Sprite(Vec2 position = Vec2(0, 0), string src = "", double scale = 1);
 	Sprite(Sprite& sp);
 	~Sprite();
 
@@ -59,7 +61,11 @@ public:
 
 	void runAnimation(Animation *anime);
 
-	virtual void onUpdate(double dt);
+	
+	
+
+	void setData(string dataName, int val) { datas[dataName] = val; }
+	int getData(string dataName) { return datas[dataName]; }
 
 	void draw();
 	void draw(SDL_Rect targetRect);
@@ -96,7 +102,6 @@ public:
 	Color getColor() { return collider.getColor(); }
 	void setAnchor(Vec2 a);
 	Vec2 getAnchor() { return anchor; };
-	void cloneTo(Sprite* sp);
 	void setScale(double k);
 	string getNodeType() { return "Sprite"; }
 	void setName(string newName);
@@ -104,6 +109,14 @@ public:
 	void rotateTo(double angle, double speed = 360.0);
 	double getRotation() { return rotation; }
 	virtual Sprite* clone();
+
+	virtual void onUpdate(double dt);
+	virtual void onCollided(Node* other, Vec2 dir);
+
+	void setUpdateFuncion(const function<void(Sprite*)> fun) { updateFunc = fun; };
+	void setCollidedFuncion(const function<void(Sprite*, Vec2)> fun) { collidedFunc = fun; };
+	function<void(Sprite*)> getUpdateFuncion() { return updateFunc; };
+	function<void(Sprite*, Vec2)> getCollidedFuncion() { return collidedFunc; };
 };
 
 

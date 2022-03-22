@@ -77,8 +77,16 @@ Vec2 Node::moveAndCollide(Vec2 velocity, bool gothrough, bool slide) {
 	Node* p = this;
 	Vec2 tmp = p->getPosition();
 
+	//Polygon2D pol(*p->getPolygonCollider());
+	//Vec2 po = tmp;
+	//Polygon2D npol({pol.points[0] +po, pol.points[1] + po, pol.points[2] + po + velocity, pol.points[3] + po + velocity});
+	/*cout << "::" << po << endl;
+	cout << npol.points[0] << endl;
+	cout << npol.points[1] << endl;
+	cout << npol.points[2] << endl;
+	cout << npol.points[3] << endl;*/
 	p->setPosition(tmp + velocity);
-
+	//npol.draw();
 	//cout << getNodeType() << endl;
 	if (getNodeType() == "Sprite") {
 		Sprite* sp = dynamic_cast<Sprite*>(this);
@@ -97,8 +105,16 @@ Vec2 Node::moveAndCollide(Vec2 velocity, bool gothrough, bool slide) {
 	for (auto n : ch) {
 		//if ((n->name) != name)
 		if(collideWith.count(n->name))
+		//if (npol.checkCollision(n, colliVec)) {
 		if (p->getPolygonCollider()->checkCollision(n, colliVec)) {
-			onCollided(n->parent);
+			onCollided(n->parent, colliVec);
+
+			Sprite* other =dynamic_cast<Sprite*> (n->parent);
+			if (other && other->enableCollider) {
+				other->onCollided(this, - colliVec);
+			}
+
+			
 			all = all + colliVec;
 		}
 	}
@@ -108,16 +124,20 @@ Vec2 Node::moveAndCollide(Vec2 velocity, bool gothrough, bool slide) {
 	if (gothrough)
 		return res;
 
+	Vec2 lastPos = tmp + velocity;
+
 	double err = 1; //使用遍历搜出刚好不发生碰撞的位置。。有点莽，理论上可以用二分改进
 	bool flag = false;
 	int cnt = 0;
 	while (cnt < 50 && (fabs(all.x) > eps || fabs(all.y) > eps))
 	{
-		p->setPosition(tmp);
+		//p->setPosition(tmp);
 		if (fabs(all.x) > eps || fabs(all.y) > eps) {
 			double angle = all.angleWith(velocity);
 
 			velocity = Vec2(fabs(all.x) < eps ? 0 : velocity.x, fabs(all.x) < eps ? velocity.y : 0);
+			
+			//------------------------
 			if (slide) {
 				if (angle < 90) {
 					velocity = velocity.project(all.normalize());
@@ -128,8 +148,12 @@ Vec2 Node::moveAndCollide(Vec2 velocity, bool gothrough, bool slide) {
 					p->setPosition(tmp + velocity * err);
 				}
 			}
+			//------------------------
 			else {
 				p->setPosition(tmp + velocity * err);
+				//lastPos = tmp + velocity * err;
+				//npol = Polygon2D({ pol.points[0], pol.points[1], pol.points[2] + velocity * err, pol.points[3] + velocity * err });
+
 			}
 			err -= 0.15 * cnt;
 			cnt++;
@@ -138,11 +162,14 @@ Vec2 Node::moveAndCollide(Vec2 velocity, bool gothrough, bool slide) {
 		for (int i = 0; i < len; i++) {
 			Polygon2D* n = ch[i];
 			if (collideWith.count(n->name))
+			//if (npol.checkCollision(n, colliVec)) {
 			if (p->getPolygonCollider()->checkCollision(n, colliVec)) {
 				all = all + colliVec;
+				//cout << "?b" << endl;
 			}
 		}
 	}
+	//p->setPosition(lastPos);
 	return res.perpendicular();
 }
 
@@ -173,6 +200,5 @@ Vec2 Node::moveToAndCollide(Vec2 endPosition, double speed, bool slide) {
 }
 
 Node* Node::clone() {
-	Node* n = new Node(*this);
-	return n;
+	return new Node(*this);
 }

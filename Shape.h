@@ -18,5 +18,6 @@ public:
 public:
 	Shape2D(vector<Vec2> points = vector<Vec2>()) :points(points) ,point_num(points.size()) {};
 	virtual string getShapeType() { return "Shape"; };
+	virtual string getNodeType() { return "Shape"; };
 	
 };

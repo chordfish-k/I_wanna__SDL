@@ -15,9 +15,9 @@ private:
 	double acceleration = 9000;
 	double friction = 15000;
 	double YFirction = friction / 5;
-	double gravity = 2000;
+	
 	double jumpSpeed = 680;
-	double speed = 250.0;
+	double speed = 280.0;
 	bool hasLastpoint = false;
 	Vec2 lastPosition = Vec2(0, 0);
 	Vec2 velocity = Vec2(0, 0);
@@ -40,11 +40,12 @@ public:
 	Player();
 	void reset();
 	void onUpdate(double dt);
-	void onCollided(Node* other);
+	void onCollided(Node* other, Vec2 dir);
 	void setState(State newState);
 	void checkMove(double dt);
 	void checkShoot(double dt);
-
+	void checkOutside(); //µô³öÊÀ½ç
+	void die();
 private:
 	void changeAnime();
 };

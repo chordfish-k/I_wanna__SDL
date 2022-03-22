@@ -13,19 +13,19 @@ Spike::Spike(int type) {
 
 	switch (type) {
 	case 0:
-		this->open("res/block/spike_up.png");
+		this->open("res/block/spike_up.bmp");
 		tri = Triangle2D(Vec2(-16, -16), Vec2(16, 0), Vec2(0, 32), Vec2(32, 32));
 		break;
 	case 1:
-		this->open("res/block/spike_right.png");
+		this->open("res/block/spike_right.bmp");
 		tri = Triangle2D(Vec2(-16, -16), Vec2(0, 0), Vec2(32, 16), Vec2(0, 32));
 		break;
 	case 2:
-		this->open("res/block/spike_down.png");
+		this->open("res/block/spike_down.bmp");
 		tri = Triangle2D(Vec2(-16, -16), Vec2(16, 32), Vec2(0, 0), Vec2(32, 0));
 		break;
 	case 3:
-		this->open("res/block/spike_left.png");
+		this->open("res/block/spike_left.bmp");
 		tri = Triangle2D(Vec2(-16, -16), Vec2(32, 0), Vec2(32, 32), Vec2(0, 16));
 		break;
 	}
@@ -37,5 +37,6 @@ Spike::Spike(int type) {
 }
 
 void Spike::onUpdate(double dt) {
-
+	Sprite::onUpdate(dt);
+	//cout << "sp" << endl;
 }

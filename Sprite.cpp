@@ -1,5 +1,18 @@
 #include "Sprite.h"
 
+Sprite::Sprite(Vec2 position, string src, double scale)
+	: Node(position), box({ 0,0,0,0 })// box(Polygon())
+{
+	collider = Polygon2D({ Vec2(0,0),Vec2(0,0) ,Vec2(0,0) ,Vec2(0,0) }, position);
+	anchor = Vec2(0.5, 0.5);
+	if (src != "") {
+		open(src);
+	}
+	setScale(scale);
+
+	updateFunc = [&](Sprite* self) {};
+	collidedFunc = [&](Sprite* self, Vec2 dir) {};
+};
 
 Sprite::Sprite(Sprite& sp) {
 	name = sp.name;
@@ -14,6 +27,9 @@ Sprite::Sprite(Sprite& sp) {
 	drawCollider = sp.drawCollider;
 	position = sp.position;
 	color = sp.color;
+
+	updateFunc = sp.updateFunc;
+	collidedFunc = sp.collidedFunc;
 }
 
 Sprite* Sprite::clone() {
@@ -121,22 +137,6 @@ void Sprite::draw(SDL_Rect targetRect) {
 		getPolygonCollider()->draw();
 }
 
-void Sprite::cloneTo(Sprite* sp) {
-	if (sp == NULL)
-		//*sp = Sprite(*this);
-		*sp = Sprite(position);
-	if (sp != NULL) {
-		sp->img = img;
-		sp->box = box;
-		sp->collider = Polygon2D( collider);
-		//cout << (sp->collider.getAllPoints().size()) << endl;
-		sp->anchor = anchor;
-		sp->enableCollider = enableCollider;
-		sp->position = position;
-		sp->color = color;
-	}
-
-}
 
 void Sprite::runAnimation(Animation *anime) {
 	if (anime == curAnimation) return;
@@ -149,6 +149,23 @@ void Sprite::onUpdate(double dt) {
 		img = curAnimation->getCurrentClip();
 		curAnimation->next();
 	}
+
+	if (simulateGravity) {
+		velocity = velocity.moveToword(Vec2(0, 500), 0, gravity * dt);
+	}
+	else {
+		velocity.y = 0;
+	}
+
+	if (velocity.y) {
+		move(velocity * dt);
+	}
+
+	updateFunc(this);
+}
+
+void Sprite::onCollided(Node* other, Vec2 dir) {
+	collidedFunc(this, dir);
 }
 
 void Sprite::rotateTo(double angle, double speed) {

@@ -14,5 +14,6 @@ public:
 	Spike(int type = 0);
 
 	void onUpdate(double dt);
+	Spike* clone() { return new Spike(*this); };
 };
 
